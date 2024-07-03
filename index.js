@@ -37,7 +37,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.get("/", (req, res) => {
     res.send("Welcome To HomePage Go to User Pages")
-})
+}) 
 
 app.get("/user", (req, res) => {
     const view = `
