@@ -36,7 +36,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.get("/", (req, res) => {
-    res.send("Welcome To HomePage Go to User Pages")
+    res.status(200).send("Welcome To HomePage Go to User Pages")
 }) 
 
 app.get("/user", (req, res) => {
@@ -51,7 +51,7 @@ app.get("/user", (req, res) => {
     </ul>
     `;
 
-    res.send(view);
+    res.status(200).send(view);
     console.log("printed....");
 });
 
@@ -71,7 +71,7 @@ app.get("/user/:id", (req, res) => {
         `;
 
         console.log(foundId);
-        res.send(view);
+        res.status(200).send(view);
     } else {
         console.log("User not found");
         res.status(404).send('User not found');
@@ -87,7 +87,7 @@ app.get("/api/user/:id", (req, res) => {
     const foundId = UsersData.find(user => user.id == id);
 
     if (foundId) {
-        res.json(foundId);
+        res.status(200).json(foundId);
     } else {
         console.log("User not found");
         res.status(404).send('User not found');
@@ -97,7 +97,7 @@ app.get("/api/user/:id", (req, res) => {
 });
 
 app.get("/api/users", (req, res) => {
-    res.json(UsersData);
+    res.status(200).json(UsersData);
     console.log("printed....");
 });
 
@@ -119,7 +119,7 @@ app.post("/user", (req, res) => {
         if (err) console.log(err);
     })
 
-    res.send("Details Are Entered...!!");
+    res.status(201).send("Details Are Entered...!!");
 
 })
 
@@ -143,7 +143,7 @@ app.post("/api/user", (req, res) => {
 
     // res.json(ud);
     // or
-    res.json(UsersData);
+    res.status(201).json(UsersData);
 
 })
 
@@ -155,7 +155,7 @@ app.put("/user", (req, res) => {
 
     if (userFound) {
         PutUserDetails(userFound, userInfo, res);
-        res.send("User Details Updated");
+        res.status(202).send("User Details Updated");
     }
     else {
         res.status(404).send("User not found")
@@ -172,7 +172,7 @@ app.put("/api/user", (req, res) => {
     if (userFound) {
         PutUserDetails(userFound, userInfo, res);
         const updated = require("./MOCK_DATA.json")
-        res.json(updated);
+        res.status(202).json(updated);
     }
     else {
         res.status(404).send("User not found")
@@ -208,7 +208,7 @@ app.patch("/user", (req, res) => {
             console.error(err);
             return res.status(500).send("Error writing to file");
         }
-        res.send("User information updated");
+        res.status(202).send("User information updated");
     });
 });
 
@@ -240,7 +240,7 @@ app.patch("/api/user", (req, res) => {
             console.error(err);
             return res.status(500).send("Error writing to file");
         }
-        res.json(UsersData);
+        res.status(202).json(UsersData);
     });
 });
 
@@ -263,7 +263,7 @@ app.delete("/user", (req, res) => {
             }
         })
 
-        res.send(`${deletedUser[0].email} is Deleted`);
+        res.status(202).send(`${deletedUser[0].email} is Deleted`);
     }
 
     else {
@@ -295,7 +295,7 @@ app.delete("/api/user", (req, res) => {
     }
 
     else {
-        res.send("User Index is not found");
+        res.status(202).send("User Index is not found");
     }
 
 })
